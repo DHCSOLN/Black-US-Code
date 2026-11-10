@@ -1,0 +1,13 @@
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        - python3 -m pip install --target /tmp/soln-code-deps 'lxml>=5,<7'
+        - mkdir -p amplify-output
+        - cp web/index.html amplify-output/index.html
+        - PYTHONPATH=/tmp/soln-code-deps python3 web/import_documents.py amplify-output/documents.json
+  artifacts:
+    baseDirectory: amplify-output
+    files:
+      - '**/*'
