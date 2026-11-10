@@ -1,82 +1,348 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Black U.S. Code | State of Loc Nation</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#fbfaf6;color:#192b30;font:1rem/1.55 system-ui,sans-serif}
-header{background:#163c3b;color:white;padding:2rem max(1.25rem,calc((100% - 62rem)/2))}
-h1,h2{font-family:Georgia,serif}
-h1{font-size:clamp(2.25rem,6vw,4rem);margin:.1rem 0}
-main{max-width:64.5rem;margin:auto;padding:1.25rem}
-nav{display:flex;flex-wrap:wrap;gap:1rem;border-bottom:1px solid #c9d0c9;padding-bottom:1rem}
-a{color:#145751}
-input{display:block;width:min(100%,32rem);font:inherit;padding:.55rem;border:1px solid #617571}
-label{display:block;margin:1.25rem 0 .4rem;font-weight:bold}
-li{margin:.65rem 0;overflow-wrap:anywhere}
-details p{white-space:pre-wrap}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Black U.S. Code | State of Loc Nation</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #fff;
+      color: #202020;
+      font: 1rem/1.5 Arial, sans-serif;
+    }
+
+    .masthead {
+      background: #172d4b;
+      color: #fff;
+      border-bottom: 4px solid #b49b63;
+    }
+
+    .container {
+      max-width: 72rem;
+      margin: auto;
+      padding: 1rem clamp(1rem, 4vw, 1.5rem);
+    }
+
+    .masthead strong {
+      font-size: .85rem;
+      letter-spacing: .08em;
+    }
+
+    h1, h2 { font-family: Georgia, serif; }
+
+    h1 {
+      margin: .2rem 0;
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+
+    h2 {
+      margin: 1.5rem 0 .5rem;
+      font-size: 1.55rem;
+    }
+
+    nav {
+      background: #eef1f5;
+      border-bottom: 1px solid #aab7c8;
+    }
+
+    nav .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem 1.5rem;
+      padding-block: .65rem;
+    }
+
+    a, summary { color: #174c83; }
+
+    a:focus-visible, summary:focus-visible, input:focus-visible {
+      outline: 2px solid #174c83;
+      outline-offset: 3px;
+    }
+
+    .search-panel {
+      background: #f4f6f8;
+      border: 1px solid #bdc8d4;
+      padding: .85rem 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: .35rem;
+      font-weight: bold;
+    }
+
+    input {
+      width: min(100%, 30rem);
+      padding: .5rem;
+      border: 1px solid #657589;
+      font: inherit;
+    }
+
+    #status { margin: .5rem 0 0; }
+
+    .browse-list {
+      list-style: none;
+      padding: 0;
+      border-top: 1px solid #bdc8d4;
+    }
+
+    .browse-list > li {
+      padding: .5rem .75rem;
+      border-bottom: 1px solid #bdc8d4;
+      overflow-wrap: anywhere;
+    }
+
+    .browse-list > li:nth-child(odd) { background: #f4f6f8; }
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    summary:hover { text-decoration: underline; }
+
+    details > ul {
+      margin: .5rem 0 .75rem;
+      padding-left: 2rem;
+    }
+
+    .record-text { white-space: pre-wrap; }
+  </style>
 </head>
 <body>
-<header><strong>STATE OF LOC NATION</strong><h1>Black U.S. Code</h1></header>
-<main>
-<nav aria-label="Collections">
-<a href="#code">Black U.S. Code</a>
-<a href="#orders">SOLN Executive Orders</a>
-</nav>
-<label for="query">Find a document or order number</label>
-<input id="query" type="search">
-<p id="status" role="status">Loading documents…</p>
-<section id="code"><h2>Black U.S. Code</h2>
-<a href="https://stateoflocnation.com/usblack-code-house-gov">Published code source</a>
-<ul></ul></section>
-<section id="orders"><h2>SOLN Executive Orders</h2>
-<a href="https://stateoflocnation.com/solngpbc-executive-orders">Published executive order source</a>
-<ul></ul></section>
-</main>
-<script>
-const query = document.querySelector("#query");
-const status = document.querySelector("#status");
-function show(index) {
-  const term = query.value.trim().toLowerCase();
-  let total = 0;
-  for (const [group, records] of Object.entries(index)) {
-    const list = document.querySelector("#" + group + " ul");
-    list.replaceChildren();
-    for (const record of records) {
-      if (!`${record.title} ${record.number || ""} ${record.text || ""}`.toLowerCase().includes(term)) continue;
-      const item = document.createElement("li");
-      if (record.pdf) {
-        const link = document.createElement("a");
-        link.href = record.pdf;
-        link.textContent = record.title + " (PDF)";
-        item.append(link);
-      } else {
-        const details = document.createElement("details");
-        const title = document.createElement("summary");
-        title.textContent = record.title;
-        const body = document.createElement("p");
-        body.textContent = record.text;
-        details.append(title, body);
-        item.append(details);
+  <header class="masthead">
+    <div class="container">
+      <strong>STATE OF LOC NATION</strong>
+      <h1>Black U.S. Code</h1>
+    </div>
+  </header>
+
+  <nav aria-label="Main navigation">
+    <div class="container">
+      <a href="#search">Search &amp; Browse</a>
+      <a href="#reading-order">Foundations</a>
+      <a href="#code">Browse the Code</a>
+      <a href="#orders">Executive Orders</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="search" aria-labelledby="search-heading">
+      <h2 id="search-heading">Search &amp; Browse</h2>
+      <div class="search-panel">
+        <label for="query">Find a document or executive order number</label>
+        <input id="query" type="search" aria-controls="code-list order-list" disabled>
+        <p id="status" role="status">Loading documents…</p>
+        <noscript>
+          Enable JavaScript to search the document index. The source links below
+          are available directly.
+        </noscript>
+      </div>
+    </section>
+
+    <section id="reading-order" aria-labelledby="reading-order-heading">
+      <h2 id="reading-order-heading">Foundations and Jurisdiction Documents</h2>
+
+      <ol class="browse-list" role="list">
+        <li>
+          <details>
+            <summary>1. Declaration of Independence</summary>
+            <ul>
+              <li>
+                <a href="https://www.archives.gov/founding-docs/declaration-transcript">
+                  Read the Declaration of Independence
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary>2. Constitution and Federalist Papers</summary>
+            <ul>
+              <li>
+                <a href="https://www.archives.gov/founding-docs/constitution-transcript">
+                  Read the Constitution
+                </a>
+              </li>
+              <li>
+                <a href="https://www.amazon.com.mx/Completion-Constitution-Federalist-Papers-Continues/dp/B0GG4MLQ8Q">
+                  Open the SOLN companion publication
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary>3. Ladder of Law</summary>
+            <ul>
+              <li>
+                <a href="https://stateoflocnation.com/usblack-code-house-gov">
+                  Open the SOLN source collection
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary>4. SOLN Restitution Act 2024</summary>
+            <ul>
+              <li>
+                <a href="https://stateoflocnation.com/usblack-code-house-gov">
+                  Open the SOLN source collection
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary>5. Clement v. Garland, No. 1:24-cv-00479-RC</summary>
+            <ul>
+              <li>
+                <a href="https://stateoflocnation.com/case-files-1%3A24cv00479-rc">
+                  Open the Clement v. Garland case files
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary>6. SOLN Executive Orders</summary>
+            <ul>
+              <li><a href="#orders">Browse the indexed orders</a></li>
+              <li>
+                <a href="https://stateoflocnation.com/solngpbc-executive-orders">
+                  Open the published orders
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+      </ol>
+    </section>
+
+    <section id="code" aria-labelledby="code-heading">
+      <h2 id="code-heading">Browse the Black U.S. Code</h2>
+      <a href="https://stateoflocnation.com/usblack-code-house-gov">
+        View the published code collection
+      </a>
+      <ul id="code-list" class="browse-list" role="list"></ul>
+    </section>
+
+    <section id="orders" aria-labelledby="orders-heading">
+      <h2 id="orders-heading">SOLN Executive Orders</h2>
+      <a href="https://stateoflocnation.com/solngpbc-executive-orders">
+        View the published executive orders
+      </a>
+      <ul id="order-list" class="browse-list" role="list"></ul>
+    </section>
+  </main>
+
+  <script>
+    const query = document.getElementById("query");
+    const status = document.getElementById("status");
+    const collections = [
+      { key: "code", list: document.getElementById("code-list") },
+      { key: "orders", list: document.getElementById("order-list") }
+    ];
+
+    function appendLink(parent, address, label) {
+      if (!address) return;
+
+      let url;
+      try {
+        url = new URL(address);
+      } catch {
+        return;
       }
-      list.append(item);
-      total++;
+
+      if (url.protocol !== "https:") return;
+
+      const line = document.createElement("p");
+      const link = document.createElement("a");
+      link.href = url.href;
+      link.textContent = label;
+      line.append(link);
+      parent.append(line);
     }
-  }
-  status.textContent = total ? `${total} documents` : "No matching documents.";
-}
-fetch("./documents.json").then(response => {
-  if (!response.ok) throw new Error("Document index unavailable");
-  return response.json();
-}).then(index => {
-  query.addEventListener("input", () => show(index));
-  show(index);
-}).catch(() => {
-  status.textContent = "The document index is unavailable. Open the published sources below.";
-});
-</script>
+
+    function createRecord(record) {
+      const item = document.createElement("li");
+      const details = document.createElement("details");
+      const summary = document.createElement("summary");
+      summary.textContent = record.title;
+      details.append(summary);
+
+      if (record.text) {
+        const text = document.createElement("p");
+        text.className = "record-text";
+        text.textContent = record.text;
+        details.append(text);
+      }
+
+      appendLink(details, record.pdf, "Open original PDF");
+      appendLink(details, record.source, "View the published source");
+      item.append(details);
+      return item;
+    }
+
+    function render(index) {
+      const term = query.value.trim().toLowerCase();
+      let total = 0;
+
+      for (const { key, list } of collections) {
+        const results = document.createDocumentFragment();
+
+        for (const record of index[key]) {
+          const searchable = [record.title, record.number, record.text]
+            .join(" ")
+            .toLowerCase();
+
+          if (!searchable.includes(term)) continue;
+          results.append(createRecord(record));
+          total++;
+        }
+
+        list.replaceChildren(results);
+      }
+
+      status.textContent = total
+        ? total + (total === 1 ? " document" : " documents")
+        : "No matching documents.";
+    }
+
+    async function loadIndex() {
+      try {
+        const response = await fetch("./documents.json");
+        if (!response.ok) throw new Error("Document index unavailable");
+
+        const index = await response.json();
+        if (!Array.isArray(index.code) || !Array.isArray(index.orders)) {
+          throw new Error("Invalid document index");
+        }
+
+        render(index);
+        query.addEventListener("input", () => render(index));
+        query.disabled = false;
+      } catch {
+        status.textContent =
+          "The document index is unavailable. Use the published source links below.";
+      }
+    }
+
+    loadIndex();
+  </script>
 </body>
 </html>
