@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Ledger & Governance Portal</title>
+    <style>
+        :root {
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+            --slate-100: #f1f5f9;
+            --zinc-50: #fafafa;
+            --gold-600: #bc9c5d;
+            --gold-500: #d4af37;
+            --border-subtle: #e2e8f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--zinc-50);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* High-End Sidebar Component */
+        aside.premium-sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--slate-900);
+            color: #ffffff;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255,255,255,0.05);
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            padding: 24px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--gold-500);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 0;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .menu-category {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            padding: 12px 24px 6px 24px;
+            font-weight: bold;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 10px 24px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu li.active a {
+            background-color: var(--slate-800);
+            color: #ffffff;
+            border-left-color: var(--gold-600);
+        }
+
+        /* Main Workspace Container */
+        .workspace-wrapper {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Luxury Navbar Component */
+        header.premium-navbar {
+            background-color: #ffffff;
+            height: 70px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .nav-search-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-search-bar input {
+            border: 1px solid var(--border-subtle);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            width: 320px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .nav-search-bar input:focus {
+            border-color: var(--gold-600);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .status-pill {
+            background-color: rgba(188, 156, 93, 0.1);
+            color: var(--gold-600);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Content Dashboard Layout */
+        main.premium-content {
+            padding: 40px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            margin-bottom: 32px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 26px;
+            font-weight: 400;
+            color: var(--slate-900);
+            letter-spacing: -0.02em;
+        }
+
+        .dashboard-header p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* High-End Document Card System */
+        .document-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01);
+            margin-bottom: 24px;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--slate-100);
+            padding-bottom: 12px;
+        }
+
+        .doc-id {
+            font-family: monospace;
+            color: var(--text-muted);
+            font-size: 12px;
+            background-color: var(--slate-100);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 16px;
+        }
+
+        .card-body-text {
+            font-family: "Georgia", serif;
+            font-size: 15px;
+            color: var(--slate-700);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* Flex Grid for Framework Data Tables */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .grid-item-card {
+            background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .grid-item-card h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--slate-800);
+            margin-bottom: 12px;
+        }
+
+        .grid-item-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Smooth Interactive Buttons */
+        .btn-premium {
+            background-color: var(--slate-900);
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-premium:hover {
+            background-color: var(--slate-800);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Left High-End Navigation Pane -->
+    <aside class="premium-sidebar">
+        <div class="sidebar-brand">Sovereign Law Portal</div>
+        <ul class="sidebar-menu">
+            <div class="menu-category">Constitutional Foundations</div>
+            <li class="active"><a href="#">Executive Mandates</a></li>
+            <li><a href="#">Sovereign Charter</a></li>
+            <li><a href="#">Hyperpower Framework</a></li>
+            
+            <div class="menu-category">Legal Directives</div>
+            <li><a href="#">Tribunal Code § 50</a></li>
+            <li><a href="#">Protection Act § 45</a></li>
+            <li><a href="#">Treaty Packet 2024</a></li>
+
+            <div class="menu-category">Financial Registry</div>
+            <li><a href="#">Central Bank Ledger</a></li>
+            <li><a href="#">LND Currency Registry</a></li>
+        </ul>
+    </aside>
+
+    <!-- Content Workspace -->
+    <div class="workspace-wrapper">
+        
+        <!-- Header Navbar -->
+        <header class="premium-navbar">
+            <div class="nav-search-bar">
+                <input type="text" placeholder="Search codices, dockets, and declarations...">
+            </div>
+            <div class="user-profile">
+                <span class="status-pill">Perfected Standings</span>
+                <span>Fiduciary Record Room</span>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Space -->
+        <main class="premium-content">
+            <div class="dashboard-header">
+                <h1>Official Executive Framework & Directives</h1>
+                <p>Global Public Trust Declarations and Active Sovereign Records</p>
+            </div>
+
+            <!-- Premium Document Card 1 -->
+            <div class="document-card">
+                <div class="card-meta">
+                    <span class="doc-id">CASE REFERENCE: 1:24-cv-00479-RC</span>
+                    <span class="status-pill" style="color: #10b981; background: rgba(16,185,129,0.1);">Enforced</span>
+                </div>
+                <h2 class="card-title">Directive I: Global Restitution Framework Initialization</h2>
+                <div class="card-body-text">
+                    Pursuant to historical mandates and corporate ledger entries filed within public administrative dockets, this system establishes the formalized activation notice of self-determination principles. Protective actions are structured to guarantee the equity of public benefit allocations, trade settlements, and resource administration globally.
+                </div>
